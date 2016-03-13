@@ -1,0 +1,28 @@
+{
+  "name": "nytdata",
+  "version": "1.0.0",
+  "description": "Scraped data from new york times and will display to users and users can leave notes",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajurado2204/nytData.git"
+  },
+  "author": "Alejandra Jurado",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ajurado2204/nytData/issues"
+  },
+  "homepage": "https://github.com/ajurado2204/nytData#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cheerio": "^0.20.0",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.7",
+    "morgan": "^1.7.0",
+    "request": "^2.69.0"
+  }
+}
