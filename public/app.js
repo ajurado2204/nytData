@@ -12,22 +12,21 @@ $(document).ready(function(){
       newDiv += "<h3 class='panel-title'>"+news.headline+"</h3>";
       newDiv += "</div>";
       newDiv += "<div class='panel-body'>";
-      newDiv += "<a href=" + news.articleLink + ">" + news.articleLink + "</a>";
-      newDiv += "<p>"+news.summary+"</p>";
+      newDiv += "<a href=" + news.articleLink + ">" + "Link: " + news.articleLink + "</a>";
+      newDiv += "<p>"+ "Summary: " + news.summary+"</p>";
       newDiv += "<form action='/submit' method='post'>"
         + "<input type='hidden' name='articleId' id='articleInput' value=" + news._id + ">"
         + "<textarea class='form-control' rows='3' name='body'>"
-        + "Write Note Here</textarea></br>"
-        + "<input type='submit' class='btn btn-default'></form>";
+        + "Notes...</textarea></br>"
+        + "<button type='submit' name='button' class='btn btn-default'>Submit</button></form>";
 
       newDiv += "</div>";
       newDiv += "</div>";
       newDiv += "</div>";
 
-
-
-      $(".container").append(newDiv);
+      $(".two").append(newDiv);
 
     });
   });
+
 });

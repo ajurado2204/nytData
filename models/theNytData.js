@@ -9,7 +9,8 @@ var NYTSchema = new Schema({
     type:String
   },
   articleLink: {
-    type:String
+    type:String,
+    unique:true
   },
   summary: {
     type:String

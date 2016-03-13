@@ -45,8 +45,6 @@ app.get('/', function(req, res){
       var headline = $(element).find(".headline").text();
       var summary = $(element).find(".summary").text();
 
-      console.log(articleLink);
-
       var insertedNYTData = new NYTData({
         "headline": headline,
         "articleLink": articleLink,
@@ -59,7 +57,7 @@ app.get('/', function(req, res){
       });
     });
 
-    res.sendfile(process.cwd() + '/index.html')
+    res.sendfile(process.cwd() + '/index.html');
   });
 });
 
@@ -76,6 +74,7 @@ app.get('/displayInfo', function(req, res) {
 });
 
 
+
 app.post('/submit', function(req, res) {
 
   var insertedNytNote = new Notes({
@@ -85,18 +84,18 @@ app.post('/submit', function(req, res) {
     if (err) {
       console.log(err);
     }
-    console.log(doc._id);
 
     NYTData.findOneAndUpdate({"_id": req.body.articleId},{$push: {'notes': doc._id}}, {new: true}, function(err, thedata) {
       if(err) {
-        res.send(err);
+        throw err;
       }else {
-        res.send(thedata);
+        res.json(thedata);
       }
     });
 
   });
 });
+
 
 
 app.listen(PORT, function() {
