@@ -14,7 +14,8 @@ $(document).ready(function(){
       newDiv += "<div class='panel-body'>";
       newDiv += "<a href=" + news.articleLink + ">" + news.articleLink + "</a>";
       newDiv += "<p>"+news.summary+"</p>";
-      newDiv += "<br action='/submit' method='post'>"
+      newDiv += "<form action='/submit' method='post'>"
+        + "<input type='hidden' name='articleId' id='articleInput' value=" + news._id + ">"
         + "<textarea class='form-control' rows='3' name='body'>"
         + "Write Note Here</textarea></br>"
         + "<input type='submit' class='btn btn-default'></form>";

@@ -13,7 +13,11 @@ var NYTSchema = new Schema({
   },
   summary: {
     type:String
-  }
+  },
+  notes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'notes'
+  }]
 });
 
 var thenytData = mongoose.model('nytData', NYTSchema);

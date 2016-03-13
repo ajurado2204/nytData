@@ -32,6 +32,7 @@ db.once('open', function() {
 
 //Require Schemas
 var NYTData = require('./models/theNytData.js');
+var Notes = require('./models/theNotes.js');
 
 
 app.get('/', function(req, res){
@@ -72,6 +73,29 @@ app.get('/displayInfo', function(req, res) {
 
     res.json(thedata);
   })
+});
+
+
+app.post('/submit', function(req, res) {
+
+  var insertedNytNote = new Notes({
+    "thenote": req.body.body
+  });
+  insertedNytNote.save(function(err, doc) {
+    if (err) {
+      console.log(err);
+    }
+    console.log(doc._id);
+
+    NYTData.findOneAndUpdate({"_id": req.body.articleId},{$push: {'notes': doc._id}}, {new: true}, function(err, thedata) {
+      if(err) {
+        res.send(err);
+      }else {
+        res.send(thedata);
+      }
+    });
+
+  });
 });
 
 
