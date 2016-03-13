@@ -8,45 +8,71 @@ var cheerio = require('cheerio');
 
 var bodyParser = require('body-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+app.use(express.static('public'));
 
 var PORT = process.env.PORT || 8000;
 
-//var mongojs = require('mongojs');
-//var databaseUrl = "scraper";
-//var collections = ["nytData"];
-//var db = mongojs(databaseUrl, collections);
-//db.on('error', function(err) {
-//  console.log('Database Error:', err);
-//});
+//Database configuration
+mongoose.connect('mongodb://localhost/week18day3mongoose');
+var db = mongoose.connection;
+
+db.on('error', function(err) {
+  console.log('Mongoose Error: ', err);
+});
+db.once('open', function() {
+  console.log('Mongoose connection successful.');
+});
+
+//Require Schemas
+var NYTData = require('./models/theNytData.js');
 
 
 app.get('/', function(req, res){
   request('http://www.nytimes.com/section/us?action=click&pgtype=Homepage&region=TopBar&module=HPMiniNav&contentCollection=U.S.&WT.nav=page', function(error, response, html) {
     var $ = cheerio.load(html);
-    var result = [];
 
-    $(".stream-supplemental .story-menu.theme-stream.initial-set").each(function(i, element) {
+    $(".stream-supplemental .latest-panel .story-menu.theme-stream.initial-set li").each(function(i, element) {
 
       var articleLink = $(element).find(".story-link").attr('href');
       var headline = $(element).find(".headline").text();
       var summary = $(element).find(".summary").text();
 
-      result.push({
-        headline: headline,
-        articleLink: articleLink,
-        summary: summary
-      })
+      console.log(articleLink);
+
+      var insertedNYTData = new NYTData({
+        "headline": headline,
+        "articleLink": articleLink,
+        "summary": summary
+      });
+      insertedNYTData.save(function(err, doc) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Success");
+        }
+      });
+
     });
 
-    console.log(result);
+    res.sendfile(process.cwd() + '/index.html')
   });
+});
 
-  res.send("Scrape Complete");
+app.get('/displayInfo', function(req, res) {
+
+  NYTData.find({}, function(err, thedata) {
+    if(err) {
+      throw err;
+    }
+
+    res.json(thedata);
+  })
 });
 
 app.listen(PORT, function() {
