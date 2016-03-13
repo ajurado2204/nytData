@@ -12,10 +12,18 @@ $(document).ready(function(){
       newDiv += "<h3 class='panel-title'>"+news.headline+"</h3>";
       newDiv += "</div>";
       newDiv += "<div class='panel-body'>";
-      newDiv += "<a href=" + 'news.articleLink' + ">" + news.articleLink + "</a>";
-      newDiv += "<p>"+news.summary+"</p></div>";
+      newDiv += "<a href=" + news.articleLink + ">" + news.articleLink + "</a>";
+      newDiv += "<p>"+news.summary+"</p>";
+      newDiv += "<br action='/submit' method='post'>"
+        + "<textarea class='form-control' rows='3' name='body'>"
+        + "Write Note Here</textarea></br>"
+        + "<input type='submit' class='btn btn-default'></form>";
+
       newDiv += "</div>";
       newDiv += "</div>";
+      newDiv += "</div>";
+
+
 
       $(".container").append(newDiv);
 
