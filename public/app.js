@@ -12,8 +12,8 @@ $(document).ready(function(){
       newDiv += "<h3 class='panel-title'>"+news.headline+"</h3>";
       newDiv += "</div>";
       newDiv += "<div class='panel-body'>";
-      newDiv += "<a href=" + news.articleLink + ">" + "Link: " + news.articleLink + "</a>";
-      newDiv += "<p>"+ "Summary: " + news.summary+"</p>";
+      newDiv += "<a href=" + news.articleLink + ">" + "<span>Link: </span>" + news.articleLink + "</a>";
+      newDiv += "<p>"+ "<span>Summary: </span>" + news.summary+"</p>";
       newDiv += "<form action='/submit' method='post'>"
         + "<input type='hidden' name='articleId' id='articleInput' value=" + news._id + ">"
         + "<textarea class='form-control' rows='3' name='body'>"

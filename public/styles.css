@@ -8,8 +8,13 @@ body{
 
 .jumbotron h1{
   color: #17A697;
+  font-family: 'Merriweather', serif;
 }
 
 .panel-heading{
   background-color: #17A697 !important;
+}
+
+span{
+  font-weight: bolder;
 }

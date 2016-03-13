@@ -68,7 +68,6 @@ app.get('/displayInfo', function(req, res) {
     if(err) {
       throw err;
     }
-
     res.json(thedata);
   })
 });
