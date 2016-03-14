@@ -57,21 +57,38 @@ app.get('/', function(req, res){
       });
     });
 
-    res.sendfile(process.cwd() + '/index.html');
+    res.sendFile(process.cwd() + '/index.html');
   });
 });
 
 
 app.get('/displayInfo', function(req, res) {
 
-  NYTData.find({}, function(err, thedata) {
-    if(err) {
-      throw err;
-    }
-    res.json(thedata);
-  })
+  NYTData.find({})
+    .populate('notes')
+    .exec(function(err, thedata) {
+      if(err) {
+        throw err;
+      }
+      res.json(thedata);
+    });
 });
 
+app.post('/delete', function(req, res){
+
+  Notes.findOneAndRemove({"_id":req.body.noteId}, function(err, doc){
+
+    NYTData.findOneAndUpdate({"_id": req.body.articleId},{$pull: {'notes': doc._id}}, {new: true}, function(err, thedata) {
+      if(err) {
+        throw err;
+      }else {
+        res.sendFile(process.cwd() + '/index.html');
+      }
+    });
+
+  });
+
+});
 
 
 app.post('/submit', function(req, res) {
@@ -88,10 +105,9 @@ app.post('/submit', function(req, res) {
       if(err) {
         throw err;
       }else {
-        res.json(thedata);
+        res.sendFile(process.cwd() + '/index.html');
       }
     });
-
   });
 });
 
