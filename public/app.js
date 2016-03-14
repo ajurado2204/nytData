@@ -5,9 +5,7 @@ $(document).ready(function(){
 
   $.getJSON("/displayInfo", function(response) {
 
-    console.log("Hello");
     response.forEach(function(news) {
-
 
       var newDiv = "<div class='col-md-12'>";
       newDiv += "<div class='panel panel-default'>";
@@ -19,9 +17,6 @@ $(document).ready(function(){
       newDiv += "<p>"+ "<span>Summary: </span>" + news.summary+"</p>";
       var count = news.notes.length;
 
-      console.log(news.headline);
-      console.log("note count is: ");
-      console.log(count);
       if(count === 0 || count === undefined){
         newDiv += "<form action='/submit' method='post'>"
           + "<input type='hidden' name='articleId' id='articleInput' value=" + news._id + ">"
@@ -37,11 +32,7 @@ $(document).ready(function(){
       else{
         news.notes.forEach(function(note){
 
-          console.log("count in line 40 is: "+count);
-
-
           if(count-- > 0){
-            console.log("count in line 56");
             newDiv += "<form action='/delete' method='post'>"
               +"<p>"+note.thenote+"</p>"
               +"<input type='hidden' name='articleId' id='articleInput' value=" + news._id + ">"
@@ -50,7 +41,6 @@ $(document).ready(function(){
           }
 
           if(count === 0){
-            console.log("count was zero showing form for notes");
             newDiv += "<form action='/submit' method='post'>"
               + "<input type='hidden' name='articleId' id='articleInput' value=" + news._id + ">"
               + "<textarea class='form-control' rows='3' name='body'>"
@@ -62,7 +52,6 @@ $(document).ready(function(){
 
             $(".two").append(newDiv);
           }
-
         });
       }
     });
