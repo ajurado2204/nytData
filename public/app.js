@@ -19,6 +19,8 @@ $(document).ready(function(){
       newDiv += "<p>"+ "<span>Summary: </span>" + news.summary+"</p>";
       var count = news.notes.length;
 
+      console.log(news.headline);
+      console.log("note count is: ");
       console.log(count);
       if(count === 0 || count === undefined){
         newDiv += "<form action='/submit' method='post'>"
@@ -34,8 +36,21 @@ $(document).ready(function(){
       }
       else{
         news.notes.forEach(function(note){
-          --count;
-          if(count=== 0){
+
+          console.log("count in line 40 is: "+count);
+
+
+          if(count-- > 0){
+            console.log("count in line 56");
+            newDiv += "<form action='/delete' method='post'>"
+              +"<p>"+note.thenote+"</p>"
+              +"<input type='hidden' name='articleId' id='articleInput' value=" + news._id + ">"
+              +"<input type='hidden' name='noteId' id='noteInput' value=" + note._id + ">"
+              +"<button type='submit' name='button' class='btn btn-default'>Remove</button></form></br>";
+          }
+
+          if(count === 0){
+            console.log("count was zero showing form for notes");
             newDiv += "<form action='/submit' method='post'>"
               + "<input type='hidden' name='articleId' id='articleInput' value=" + news._id + ">"
               + "<textarea class='form-control' rows='3' name='body'>"
@@ -47,13 +62,7 @@ $(document).ready(function(){
 
             $(".two").append(newDiv);
           }
-          else{
-            newDiv += "<form action='/delete' method='post'>"
-              +"<p>"+note.thenote+"</p>"
-              +"<input type='hidden' name='articleId' id='articleInput' value=" + news._id + ">"
-              +"<input type='hidden' name='noteId' id='noteInput' value=" + note._id + ">"
-              +"<button type='submit' name='button' class='btn btn-default'>Remove</button></form></br>";
-          }
+
         });
       }
     });
